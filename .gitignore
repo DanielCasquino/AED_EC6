@@ -30,3 +30,8 @@
 *.exe
 *.out
 *.app
+
+.vscode/*
+build/*
+CMakeLists.txt
+main.cpp

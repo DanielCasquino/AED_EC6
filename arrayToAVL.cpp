@@ -28,11 +28,11 @@ public:
 
 		sort(array.begin(), array.end());
 
-		int mid = array.size() - 1 / 2;
+		int mid = (array.size() - 1) / 2;
 		TreeNode *arrayAVL = nullptr;
 		insert(arrayAVL, array[mid]);
 		vector<int> p1(array.begin(), array.begin() + mid);
-		vector<int> p2(array.begin() + mid, array.end());
+		vector<int> p2(array.begin() + mid + 1, array.end());
 		TreeNode *left = arrayToAVL(p1);
 		TreeNode *right = arrayToAVL(p2);
 

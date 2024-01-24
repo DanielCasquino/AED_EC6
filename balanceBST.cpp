@@ -19,7 +19,9 @@ class Solution {
 	
 public:
 	TreeNode* balanceBST(TreeNode *root) {
-		// add your code
+		vector<int> values;
+		inOrder(root, values);
+		return buildTree(values, 0, values.size() - 1);
 	}
 };
 

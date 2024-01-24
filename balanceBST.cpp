@@ -4,6 +4,7 @@
 #include <cassert>
 #include <unordered_map>
 #include <cmath>
+#include <algorithm>
 using namespace std;
 
 struct TreeNode {
@@ -14,14 +15,47 @@ struct TreeNode {
 	TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
 	TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
- 
 class Solution {
 	
 public:
+int height(TreeNode *node)
+	{
+		return !node ? -1 : 1 + max(height(node->left), height(node->right));
+	}
+	TreeNode *buildTree(vector<int> &nodes, int start, int end)
+	{
+		if (start > end)
+		{
+			return nullptr;
+		}
+		int mid = (start + end) / 2;
+		TreeNode *root = new TreeNode(nodes[mid]);
+		root->left = buildTree(nodes, start, mid - 1);
+		root->right = buildTree(nodes, mid + 1, end);
+		return root;
+	}
+
 	TreeNode* balanceBST(TreeNode *root) {
-		vector<int> values;
-		inOrder(root, values);
-		return buildTree(values, 0, values.size() - 1);
+		if (!root) return nullptr;
+		vector<int> nodes;
+		queue<TreeNode *> queue;
+		queue.push(root);
+		while (!queue.empty())
+		{
+			TreeNode *curr = queue.back();
+			nodes.push_back(curr->val);
+			queue.pop();
+			if (curr->left)
+			{
+				queue.push(curr->left);
+			}
+			if (curr->right)
+			{
+				queue.push(curr->right);
+			}
+		}
+		sort(nodes.begin(), nodes.end());
+		return this->buildTree(nodes, 0, nodes.size() - 1);
 	}
 };
 
